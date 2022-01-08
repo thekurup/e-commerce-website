@@ -1,0 +1,141 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+
+  <div id = "ordered_items" class="container mt-5 mb-5">
+    <div class="row">
+    <aside class="col-md-3">
+      {% include 'user/my_account_base.html' %}
+    </aside>
+    <main class="col-md-9">
+        <h2 class="">Your Addresses</h2>
+
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">City</th>
+                <th scope="col">Post Code</th>
+                <th scope="col">Country</th>
+                <th scope="col">state</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+                {% for user_address in user_addresses %}
+              <tr>
+                <td>{{user_address.first_name}}</td>
+                <td>{{user_address.last_name}}</td>
+                <td>{{user_address.address}}</td>
+
+                <td>{{user_address.phone_number}}</td>
+                <td>{{user_address.email}}</td>
+
+                <td>{{user_address.city}}</td>
+                <td>{{user_address.post_code}}</td>
+                <td>{{user_address.country}}</td>
+                <td>{{user_address.state}}</td>
+                <td><a href="{% url 'my_account_address_edit' user_address.id %}"><button type="button" class="btn btn-outline-primary">EDIT</button></a></td>
+                <td><button onclick="delete_order('{{user_address.id}}')" type="button" class="btn btn-outline-danger">DELETE</button></td>
+
+              </tr>
+              {% endfor %}
+          </table>
+
+    </main>
+  </div> <!-- row.// -->
+  </div>
+  
+  
+  </section>
+  <!-- ========================= SECTION CONTENT END// ========================= -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+  <script>
+
+    /* cancel order */
+
+    function delete_order(id){
+
+      var data = {
+    
+          'address_id' :id,
+          'csrf_token' : '{{csrf_token}}',
+    
+      }
+      swal({
+        title: "Are you sure?",
+        text: "Once Deleted, you will not be able to retrive the address!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+    
+    
+          $.ajax({
+            url:"{% url 'delete_address' %}",
+            type:"POST",
+            data: data,
+              dataType: "html",
+              success: function () {
+                  $("#ordered_items").load(location.href + " #ordered_items");            
+        
+              }
+        
+          });
+          
+          swal("You deleted your address!", {
+            icon: "success",
+          });
+        } else {
+          swal("Your address is safe!");
+        }
+      });
+    
+    
+    }
+
+
+
+  $('.list-group-item').click(function() {
+    $(this).removeClass('list-group-item');
+    $(this).addClass('list-group-item active');
+});
+
+
+$('.list-group-item active').click(function() {
+  $(this).removeClass('list-group-item active');
+  $(this).addClass('list-group-item');
+});
+
+
+
+
+
+  </script>
+
+  
+  
+
+  
+
+
+
+
+{% endblock %}
+

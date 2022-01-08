@@ -1,0 +1,158 @@
+{% extends 'admin/adminbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18">Sales Report</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
+                                            <li class="breadcrumb-item active">Daily Sales Report`</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Weekly Sales Report</h4>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="{% url 'weekly_sales_report' %}" method="POST">
+                                            {% csrf_token %}
+                                        <div class="row mb-3">
+                                            <div class="col-4">
+                                                <label for="basicpill-address-input" class="form-label">From</label>
+                                                <input type="week" name = "week1" class="form-control" id="from_id">
+
+                                            </div>
+                                            
+                                            <div class="col-4">
+                                                <label for="basicpill-address-input" class="form-label">TO</label>
+                                                <input type="week" name = "week2" class="form-control" id="to_id">
+                                            </div>
+
+                                            <div class="col-3">
+                                                <label for="basicpill-address-input" class="form-label"></label><br>
+                                                <br>
+
+                                                <button type="submit"  class="btn btn-primary btn-rounded waves-effect waves-light">Search</button>
+                                            </div>
+
+                                        </div>
+                                        </form>
+
+
+                                        <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+
+                                            <thead>
+                                            <tr>
+                                                <th>Index</th>
+                                                <th>Order ID</th>
+                                                <th>Payment Method</th>
+                                                <th>Grand Total</th>
+                                                <th>Delivery Address</th>
+                                                <th>Delivery Status</th>
+                                                <th>Ordered Date</th>
+
+                                            </tr>
+                                            </thead>
+        
+        
+                                            <tbody>
+                                            {% for order in orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{order.order_id}}</td>
+                                                <td>{{order.payment_method}}</td>
+                                                <td>₹ {{order.grand_total}}</td>
+                                                <td>{{order.delivered_address}}</td>
+                                                <td>{{order.delivery_status}}</td>
+                                                <td>{{order.ordered_date}}</td>
+
+
+                                            </tr>
+                                            {% endfor %}
+                                        
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- end cardaa -->
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+                <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+                <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+
+
+                <script>
+                    $(document).ready(function () {
+                        $('#datatable-buttons').DataTable({
+                            "footerCallback": function (row, data, start, end, display) {
+                                var api = this.api(), data;
+                
+                                // Remove the formatting to get integer data for summation
+                                var intVal = function (i) {
+                                    return typeof i === 'string' ?
+                                        i.replace(/[\$,]/g, '') * 1 :
+                                        typeof i === 'number' ?
+                                            i : 0;
+                                };
+                
+                                // Total over all pages
+                                total = api
+                                    .column(4)
+                                    .data()
+                                    .reduce(function (a, b) {
+                                        return intVal(a) + intVal(b);
+                                    }, 0);
+                
+                              
+                                // Update footer
+                                $(api.column(4).footer()).html(
+                                   ' ( $' + total + ' total)'
+                                );
+                            },
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'excel', 'pdf', 'print'
+                            ],
+                        });
+                    });
+</script>
+
+
+{% endblock %} -->

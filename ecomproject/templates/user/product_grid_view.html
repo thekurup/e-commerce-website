@@ -1,0 +1,281 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+
+<section class="product-grids section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-12">
+          <div class="product-sidebar">
+            <div class="single-widget search">
+              <h3>Search Product</h3>
+              <form action="#">
+                <input type="text" placeholder="Search Here..." />
+                <button type="submit">
+                  <i class="lni lni-search-alt"></i>
+                </button>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-12">
+          <div class="product-grids-head">
+            <div class="product-grid-topbar">
+              <div class="row align-items-center">
+                <div class="col-lg-7 col-md-8 col-12">
+                  <div class="product-sorting">
+
+                    <h3 class="total-show-product">
+                      Showing: <span>{{product_count}} items</span>
+                    </h3>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-4 col-12">
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button
+                        class="nav-link active"
+                        id="nav-grid-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-grid"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-grid"
+                        aria-selected="true"
+                      >
+                        <i class="lni lni-grid-alt"></i>
+                      </button>
+                      <button
+                        class="nav-link"
+                        id="nav-list-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-list"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-list"
+                        aria-selected="false"
+                      >
+                        <i class="lni lni-list"></i>
+                      </button>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="nav-grid"
+                role="tabpanel"
+                aria-labelledby="nav-grid-tab"
+              >
+
+              <!-- Product display start -->
+
+                <div class="row">
+
+                  {% for product in products %}
+
+                  <div class="col-lg-4 col-md-6 col-12">
+                    <a href="{% url 'single_product_view' product.id %}">
+
+                    <div class="single-product">
+                      <div class="product-image">
+                        <img
+                          src="{{product.product_cover.url}}"
+                          alt="#"
+                        />
+                        <div class="button">
+                          {% if product.stocks == 0 %}
+                          <button class="btn btn-warning" disabled
+                          ><i class="lni lni-cart"></i>Out Of Stock</button>
+        
+                          {% else %}
+                          <button id ="addtocart" onclick="add_to_cart('{{product.id}}')" class="btn mb-2"><i class="lni lni-cart"></i> Add to Cart</button>
+                          <button  class="btn"><i class="lni lni-rocket"></i> Buy Now</button>
+        
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="product-info text-center">
+                        <span style="text-transform: capitalize;" class="category">{{product.category.category_name}}</span>
+                        <h4 class="title">
+                          <a style="text-transform: capitalize;" href="{% url 'single_product_view' product.id %}">{{product.product_name}}</a>
+                        </h4>
+                        <ul class="review">
+                          
+                          <li><span>(1kg)</span></li>
+                        </ul>
+                        <div class="price">
+                          {% if product.sub_category.catergory_id.offer_status == 'True' %}
+                          <span>₹{{product.sale_price}} <span style="text-decoration: line-through;">₹{{product.old_sale_price}}</span></span>
+                          {% elif product.offer_status == 'True' %}
+                          <span>₹{{product.sale_price}} <span style="text-decoration: line-through;">₹{{product.old_sale_price}}</span></span>
+                          {% else %}
+                          <span>₹{{product.sale_price}}</span> 
+        
+                          {% endif %}
+                        </div>
+                        <div>
+                          {% if product.offer_applied == 'product_offer' %} 
+
+                            <p class="text-success">{{product.offer_percent}} % off </p> 
+
+                          {% elif product.offer_applied == 'category_offer' %} 
+
+                            <p class="text-success"> {{ product.sub_category.catergory_id.offer_percent }} % off
+                            </p>
+
+                 
+                          {% else %} 
+
+                            <p class="text-success"> <br>
+                            </p>
+
+                          {% endif %}
+                        </div>
+
+                      </div>
+                    </div>
+                    </a>
+                  </div>
+                  {% endfor %}
+                </div>
+                
+              </div>
+              <div
+                class="tab-pane fade"
+                id="nav-list"
+                role="tabpanel"
+                aria-labelledby="nav-list-tab"
+              >
+                <div class="row">
+                  {% for product in products %}
+                  <div class="col-lg-12 col-md-12 col-12">
+                    <a href="{% url 'single_product_view' product.id %}">
+
+                    <div class="single-product">
+                      <div class="row align-items-center">
+                        <div class="col-lg-4 col-md-4 col-12">
+                          <div class="product-image">
+                            <img
+                              src="{{product.product_cover.url}}"
+                              alt="#"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-12">
+                          <div class="product-info">
+                            <span class="category" style="text-transform: capitalize;" >{{product.category.category_name}}</span>
+                            <h4 class="title">
+                              <a href="{% url 'single_product_view' product.id %}"
+                                >{{product.product_name}}</a
+                              >
+                            </h4>
+                            <ul class="review">
+                              <li><i class="lni lni-star-filled"></i></li>
+                              <li><i class="lni lni-star-filled"></i></li>
+                              <li><i class="lni lni-star-filled"></i></li>
+                              <li><i class="lni lni-star-filled"></i></li>
+                              <li><i class="lni lni-star"></i></li>
+                              <li><span>4.0 Review(s)</span></li>
+                            </ul>
+                            <div class="price">
+                              {% if product.sub_category.catergory_id.offer_status == 'True' %}
+                              <span>₹{{product.sale_price}} <span style="text-decoration: line-through;">₹{{product.old_sale_price}}</span></span>
+                              {% elif product.offer_status == 'True' %}
+                              <span>₹{{product.sale_price}} <span style="text-decoration: line-through;">₹{{product.old_sale_price}}</span></span>
+                              {% else %}
+                              <span>₹{{product.sale_price}}</span> 
+            
+                              {% endif %}
+                            </div>
+                            <div>
+                              {% if product.offer_applied == 'product_offer' %} 
+    
+                                <p class="text-success">{{product.offer_percent}} % off </p> 
+    
+                              {% elif product.offer_applied == 'category_offer' %} 
+    
+                                <p class="text-success"> {{ product.sub_category.catergory_id.offer_percent }} % off
+                                </p>
+    
+                     
+                              {% else %} 
+    
+                                <p class="text-success"> <br>
+                                </p>
+    
+                              {% endif %}
+                            </div>
+                            <div class="button mt-30">
+                              {% if product.stocks == 0 %}
+                              <button class="btn btn-warning" disabled
+                              ><i class="lni lni-cart"></i>Out Of Stock</button>
+            
+                              {% else %}
+                              <div class="d-flex justify-content-start">
+                              <button id ="addtocart" onclick="add_to_cart('{{product.id}}')" class="btn mb-2"><i class="lni lni-cart"></i> Add to Cart</button>
+                              <button  class="btn mb-2"><i class="lni lni-rocket"></i> Buy Now</button>
+                              </div>
+            
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </a>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    //   <!-- add to cart -->
+
+  function add_to_cart(product_id){
+
+    console.log(product_id)
+    var data = {
+        'product_id': product_id,
+        'csrf_token' : '{{csrf_token}}',
+    
+
+    }
+    $.ajax({
+        url:"{% url 'add_cart' %}",
+        type:"POST",
+        data: data,
+        success: function(data){
+          console.log('success')
+          Toastify({
+  
+            text: "Item added to cart",
+            duration: 3000,
+            style: {
+                background: "linear-gradient(to right, #ff512f",
+              }
+
+            }).showToast();
+          
+            $("#cart_main_div_id").load(location.href + " #cart_main_div_id");            
+
+          
+            
+        }
+    })
+
+
+}
+
+//   <!-- add to cart ends -->
+  </script>
+
+{% endblock %}
