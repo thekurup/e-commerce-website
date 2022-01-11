@@ -89,8 +89,8 @@ AUTH_USER_MODEL = 'useraccount.Accounts'
 # razor pay
 
 
-RAZOR_KEY_ID = 'rzp_test_iNvuoWcn7v4lLA'
-RAZOR_KEY_SECRET = 'tikqOUaZhgdBaaGZnRyb99Ls'
+RAZOR_KEY_ID = 'rzp_test_ua5R6cpSZPCqaE'
+RAZOR_KEY_SECRET = 'PngaNZnBNJpoBOz4KSeCOhg0'
 
 # Twilio
 
