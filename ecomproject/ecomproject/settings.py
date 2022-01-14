@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0%a6&oj--q-h11qclrwv2l20eb55=l*36$&x4lpjk11vab-#*#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -89,8 +89,8 @@ AUTH_USER_MODEL = 'useraccount.Accounts'
 # razor pay
 
 
-RAZOR_KEY_ID = 'rzp_test_iNvuoWcn7v4lLA'
-RAZOR_KEY_SECRET = 'tikqOUaZhgdBaaGZnRyb99Ls'
+RAZOR_KEY_ID = 'rzp_test_ua5R6cpSZPCqaE'
+RAZOR_KEY_SECRET = 'PngaNZnBNJpoBOz4KSeCOhg0'
 
 # Twilio
 
