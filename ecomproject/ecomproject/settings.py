@@ -10,8 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from concurrent.futures import process
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 from django.contrib.messages import constants as messages
 
@@ -89,14 +92,9 @@ AUTH_USER_MODEL = 'useraccount.Accounts'
 # razor pay
 
 
-RAZOR_KEY_ID = 'rzp_test_ua5R6cpSZPCqaE'
-RAZOR_KEY_SECRET = 'PngaNZnBNJpoBOz4KSeCOhg0'
 
 # Twilio
 
-TWILIO_SERVICE_SID = 'VA588549f1ff7e8eaaebb9c800d7ea9744'
-ACCOUNT_SID = 'ACfaa078cba3798f7e74284ef8d16f13e0'
-TWILIO_AUTH_TOKEN = ''
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -152,6 +150,16 @@ STATICFILES_DIRS = [
 
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+TWILIO_AUTH_TOKEN= os.getenv("TWILIO_AUTH_TOKEN")
+
+TWILIO_SERVICE_SID = os.getenv("TWILIO_SERVICE_SID")
+ACCOUNT_SID = os.getenv("ACCOUNT_SID")
+
+
+RAZOR_KEY_ID = os.getenv("RAZOR_KEY_ID")
+
+RAZOR_KEY_SECRET = os.getenv("RAZOR_KEY_SECRET") 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
