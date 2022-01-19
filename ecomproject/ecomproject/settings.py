@@ -96,7 +96,7 @@ RAZOR_KEY_SECRET = 'PngaNZnBNJpoBOz4KSeCOhg0'
 
 TWILIO_SERVICE_SID = 'VA588549f1ff7e8eaaebb9c800d7ea9744'
 ACCOUNT_SID = 'ACfaa078cba3798f7e74284ef8d16f13e0'
-TWILIO_AUTH_TOKEN = '6c41e6a21427ae8bbc11403cc6c58987'
+TWILIO_AUTH_TOKEN = ''
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
