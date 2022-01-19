@@ -78,7 +78,21 @@ def add_products(request):
         if Products.objects.filter(product_name = product_name).exists():
             messages.info(request, 'Product exists')
             return redirect('add_products')
-
+        elif  product_name == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_products')
+        elif  description == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_products')
+        elif  mrp == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_products')
+        elif  sales_price == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_products')
+        elif  stock == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_products')
         else:
 
             # OBEJECT OF THE PARENT TABLE (FOREIGN KEY)
@@ -94,15 +108,15 @@ def add_products(request):
             if product_image1 != None:
                 new_image = ImageGallery(product_id = product_id, image = product_image1 )
                 new_image.save()
-
+            
             if product_image2 != None:
                 new_image = ImageGallery(product_id = product_id, image = product_image2)
                 new_image.save()
-
+        
             if product_image3 != None:
                 new_image = ImageGallery(product_id = product_id, image = product_image3)
                 new_image.save()
-
+    
             if product_image4 != None:
                 new_image = ImageGallery(product_id = product_id, image = product_image4)
                 new_image.save()
@@ -294,9 +308,15 @@ def add_banner(request):
         product = Products.objects.get(id = product_id)
         Banner.objects.create(image = image, description = description, product = product)
 
-        return redirect('banner_management')
-
+        if description == "" :    
+            messages.info(request,'please fill the field')
+            return redirect('add_banner')
+        
+        else:
+            return redirect('banner_management')
+        
     else:
+        
 
         products = Products.objects.all()
 
@@ -484,7 +504,21 @@ def add_coupon(request):
         if Coupon.objects.filter(coupon_name = coupon_name).exists():  
 
             messages.info(request, 'Coupon exists')
-            return redirect('add_coupon')   
+            return redirect('add_coupon') 
+        elif  coupon_name == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_coupon')  
+        elif   coupon_percent == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_coupon')
+        elif   expiry_date == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_coupon')
+        elif   expiry_time == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_coupon')
+
+
 
         else:
 

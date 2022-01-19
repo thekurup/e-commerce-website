@@ -455,6 +455,7 @@
             </div>
             <!-- <input name="hidden_wallet_pay" id="hidden_wallet_pay" class="d-none" type="text"> -->
             <input name="hidden_g_total" id="hidden_g_total" class="d-none" type="text">
+            <input name="hidden_coupon_id" id="hidden_coupon_id" class="d-none" type="text">
       </form>
 
           <!-- form ends -->
@@ -505,7 +506,7 @@
  var payment_methods = "PayPal"
  var redirecting_url = "{% url 'paypal_payment_success' %}"
  var error_redirecting_url = "{% url 'payment_error' %}"
- 
+
  
  
  var address_id = document.getElementById('mailing_address_id').value
@@ -539,7 +540,7 @@
                function sendData(){
  
                  var amount = document.getElementById('grand_total_hidden_field').value
- 
+                 var coupon = document.getElementById('hidden_coupon_id').value
  
                  fetch(url, {
                    method: 'POST', // or 'PUT'
@@ -554,6 +555,7 @@
                      status : orderData.status,
                      address_id : address_id,
                      grand_total :  amount,
+                     coupon : coupon,
                    }),
                  })
                  .then(response => response.json())
@@ -758,7 +760,7 @@ else
                 
                       document.getElementById('grand_total_id').innerText = '₹' + applied_coupon_total
                       document.getElementById("grand_total_hidden_field").value = applied_coupon_total
-
+                      document.getElementById('hidden_coupon_id').value = coupon_id
                       document.getElementById("coupon_name_id").innerText = coupon_name
                       $("#coupon_name_id").css("color","#17CC19");
 

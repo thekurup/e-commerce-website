@@ -500,7 +500,7 @@ def delete_product(request):
 @csrf_exempt
 def paypal_payment(request):
     body = json.loads(request.body)
-
+ 
     transaction_id = body['transID']
 
     id = request.user.id
@@ -536,6 +536,7 @@ def paypal_payment(request):
         OrderItems.objects.create(quantity=item.quantity, products_id=item.products_id, sub_total=item.sub_total,
                                   user=current_user, order=new_order)
 
+
         # reducing the product stock
 
         product = Products.objects.get(id=item.products_id.id)
@@ -543,6 +544,13 @@ def paypal_payment(request):
         product.save()
 
     cart_items.delete()
+    #coupon removal if any
+    if body['coupon']:
+        coupon_id =body['coupon']
+        coupon_instance = Coupon.objects.get(coupon_id=coupon_id)
+        user = request.user
+        ExpiredCoupon.objects.create(coupon=coupon_instance , user=user)
+    
 
     # Taking new order id
     new_order_id = new_order.id
@@ -551,8 +559,10 @@ def paypal_payment(request):
         'new_order_id': new_order_id,
         'transID': transaction_id,
     }
+    
 
     return JsonResponse(data, safe=False)
+
 
 
 # paypal success
@@ -578,6 +588,8 @@ def paypal_payment_success(request):
         'grand_total': grand_total
 
     }
+     
+    
     return render(request, 'user/order_details.html', context)
 
 

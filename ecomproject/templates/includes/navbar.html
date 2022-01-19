@@ -5,9 +5,9 @@
         <div class="nav-inner">
           <div class="mega-category-menu">
             <span class="cat-button"
-              ><i class="lni lni-menu"></i>All Categories</span
+              ><i class="lni lni-menu"></i></span
             >
-            <ul class="sub-category">
+            <!-- <ul class="sub-category">
               <li>
 
                   {% for category in categories %}
@@ -20,7 +20,7 @@
                   </li>
                 </ul>
               </li>
-            </ul>
+            </ul> -->
           </div>
 
           <nav class="navbar navbar-expand-lg">
@@ -59,26 +59,24 @@
                     aria-controls="navbarSupportedContent"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
-                    >Pages</a
+                    >All Categories</a
                   >
                   <ul class="sub-menu collapse" id="submenu-1-2">
-                    <li class="nav-item">
-                      <a href="about-us.html">About Us</a>
-                    </li>
-                    <li class="nav-item"><a href="faq.html">Faq</a></li>
-                    <li class="nav-item"><a href="login.html">Login</a></li>
-                    <li class="nav-item">
-                      <a href="register.html">Register</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="mail-success.html">Mail Success</a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="404.html">404 Error</a>
-                    </li>
+                    <li>
+
+                      {% for category in categories %}
+    
+                          <li><a href="{% url 'product_grid_view' category.id %}">{{category.category_name}}</a></li>
+    
+                      {% endfor %}
+                      <li>
+                        <a href="{% url 'view_all_products' %}">All</a>
+                      </li>
+                    </ul>
+                  </li>
                   </ul>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a
                     class="dd-menu collapsed"
                     href="javascript:void(0)"
@@ -104,8 +102,8 @@
                       <a href="checkout.html">Checkout</a>
                     </li>
                   </ul>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                   <a
                     class="dd-menu collapsed"
                     href="javascript:void(0)"
@@ -129,12 +127,12 @@
                       >
                     </li>
                   </ul>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                   <a href="contact.html" aria-label="Toggle navigation"
                     >Contact Us</a
                   >
-                </li>
+                </li> -->
               </ul>
             </div>
           </nav>

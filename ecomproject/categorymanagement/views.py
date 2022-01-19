@@ -33,13 +33,20 @@ def add_category(request):
         slug = category_name.replace(" ", "-").lower()
         description = request.POST['description'].lower()
 
-        if Category.objects.filter(category_name = category_name).exists():
+        if Category.objects.filter(category_name = category_name).exists() :
             messages.info(request, 'Category Already Exist')
             return redirect('add_category')
-        else:
-            current_category = Category.objects.create(category_name = category_name, slug = slug,description = description )
 
-            # Checking the products offer
+        elif  category_name == "" :
+            messages.info(request,'please fill the field')
+            return redirect('add_category')
+        elif  description == "" :
+            messages.info(request,'please fill the field')
+            return redirect('add_category')
+        else:
+            Category.objects.create(category_name = category_name, 
+                    slug = slug,
+                    description = description,  )
 
             return redirect('category')
 
@@ -49,7 +56,8 @@ def add_category(request):
         context = {
             'offers' : offers
         }
-        return render(request,'admin/add_category.html', context)
+        return render(request,'admin/add_category.html',context)
+
 
 
 # EDIT CATEGORY
@@ -131,7 +139,9 @@ def add_sub_category(request):
             messages.info(request, 'Sub Category Already Exist')
             return redirect('add_sub_category')
 
-
+        elif    sub_category_name  == "" and description == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_sub_category')
         else:
 
             SubCategory.objects.create(sub_category_name = sub_category_name, slug = slug, catergory_id = cat, description = description)
@@ -224,7 +234,19 @@ def add_offer(request):
         if Offer.objects.filter(offer_name = offer_name).exists():
             messages.info(request, 'Offer Already Exist')
             return redirect('add_offer')
-
+        elif   offer_name == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_offer')
+        elif   offer_percent == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_offer')
+        elif   expiry_date == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_offer')
+        elif   expiry_time == "":    
+            messages.info(request,'please fill the field')
+            return redirect('add_offer')
+        
         else:
 
             Offer.objects.create(offer_name = offer_name, offer_percent = offer_percent, expiry_date = expiry_date, expiry_time = expiry_time)
@@ -342,7 +364,6 @@ def category_offer_update(request):
 
                     # the sales price and assigning it to the column old_sale_price
 
-                    print("product hiiiiiiiiiiiiiii")
 
                     if product.old_sale_price is not None:
 

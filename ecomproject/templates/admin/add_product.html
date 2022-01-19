@@ -60,7 +60,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="mrp">MRP</label>
-                                                        <input id="m_r_p" name="mrp" type="number" class="form-control" onkeypress="return isNumber(event)" onpaste="return false;"
+                                                        <input id="m_r_p" name="mrp" type="number" name="test_name" min="0"  oninput="validity.valid||(value='');" class="form-control" onkeypress="return isNumber(event)" onpaste="return false;"
                                                         oninput="javascript: if(this.value > this.maxLength) this.value = this.value.slice(0, this.maxLength)" maxlength="6">
                                                         <span class="error_form" id="mrp_error_message"></span>
 
@@ -68,7 +68,7 @@
 
                                                     <div class="mb-3">
                                                         <label for="sales">Sales Price</label>
-                                                        <input id="product_salesprice" name="sales_price" type="number" class="form-control" onkeypress="return isNumber(event)" onpaste="return false;"
+                                                        <input id="product_salesprice" name="sales_price" type="number" name="test_name" min="0" oninput="validity.valid||(value='');" class="form-control" onkeypress="return isNumber(event)" onpaste="return false;"
                                                         oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)" maxlength="6">
                                                         <span class="error_form" id="sale_price_error_message"></span>
 
@@ -76,8 +76,8 @@
 
                                                     <div class="mb-3">
                                                         <label for="stock">stock</label>
-                                                        <input id="product_stock" name="stock" type="number" class="form-control" onkeypress="return isNumber(event)" onpaste="return false;"     
-                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "6"
+                                                        <input id="product_stock" name="stock" type="number" name="test_name" min="0" oninput="validity.valid||(value='');"  class="form-control" onkeypress="return isNumber(event)" onpaste="return false;"     
+                                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength = "3"
                                                         >
                                                         <span class="error_form" id="stock_error_message"></span>
 
@@ -90,7 +90,7 @@
                                                         <label class="control-label">Sub Category</label>
         
                                                         <select name = 'sub_category' class="select2 form-control select2-multiple" data-placeholder="Choose ..." required>
-                                                            <option value="{{subcategories.0.id}}" selected >Select</option>
+                                                            <!-- <option value="{{subcategories.0.id}}" selected >Select</option> -->
                                                             {% for sub in subcategories %}
                                                             <option value="{{sub.id}}">{{sub.sub_category_name}}</option>
                                                             {% endfor %}

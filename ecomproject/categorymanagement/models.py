@@ -11,7 +11,7 @@ class Category(models.Model):
     offer_name      = models.CharField(max_length=200, null=True, blank= True)
     offer_percent   = models.IntegerField(null=True, blank= True)
     expiry_date     = models.DateField(null=True, blank= True)
-    offer_status    = models.CharField(max_length=100, default=True, null=True, blank= True)
+    offer_status    = models.CharField(max_length=100, default=False, null=True, blank= True)
 
 
 
